@@ -1,3 +1,11 @@
+<?php
+
+session_start();
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,10 +17,10 @@
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" >
 
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 
@@ -59,7 +67,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="../index.html">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="../pages/about.html">About</a></li>
         <li><a href="used_vehicles.html">Used Vehicles</a></li>
         <li><a href="finance.html">Finance</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
@@ -74,52 +82,75 @@
 <div class="row">
   <div class="col-xs-12">
     <article class="inner-main-content">
-      <h1>Add Customer</h1>
+      <h1>View Customer</h1>
       <div class="row employee-login">
         <div class="col-xs-4">
-          <a href="viewcustomer.html" class="btn btn-success">View Customer</a>
+          <a href="viewcustomer.php" class="btn btn-success">View Customer</a>
         </div>
         <div class="col-xs-4">
-          <a href="addcustomer.html" class="btn btn-success">Add Customer</a>
+          <a href="addcustomer.php" class="btn btn-success">Add Customer</a>
         </div>
         <div class="col-xs-4">
-          <a href="addsale.html" class="btn btn-success">Make Sale</a>
+          <a href="addsale.php" class="btn btn-success">Make Sale</a>
         </div>
       </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <form role="form">
-            <div class="form-group">
-              <label for="firstname">First Name:</label>
-              <input type="text" class="form-control" id="firstname">
-            </div>
+            <div class="row">
+        <div class="col-md-12">
+            <form role="form" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <div class="form-group">
               <label for="lastname">Last Name:</label>
-              <input type="text" class="form-control" id="lastname">
+              <input type="text" class="form-control" id="lastname" name="lastname">
             </div>
-              <div class="form-group">
-              <label for="streetno">Street Number:</label>
-              <input type="text" class="form-control" id="streetno">
-            </div>
+            
             <div class="form-group">
-              <label for="streetname">Street Name:</label>
-              <input type="text" class="form-control" id="streetname">
-            </div>
-            <div class="form-group">
-              <label for="suburb">Suburb:</label>
-              <input type="text" class="form-control" id="suburb">
-            </div>
-            <div class="form-group">
-              <label for="state">State:</label>
-              <input type="text" class="form-control" id="state">
-            </div>
-            <div class="form-group">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" id="email">
-            </div>
             <button type="submit" class="btn btn-default">Submit</button>
-        </form>
+          </div>
+         </form>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-md-12">
+<?php
+
+if ($_POST) {
+  
+$lastname = "";
+ 
+$lastname = $_POST['lastname'];
+ 
+
+include('connect.php');
+
+$query = "SELECT * FROM `customers` WHERE `Last_Name` LIKE '%$lastname%'";
+
+$result = mysqli_query($con, $query);
+
+while ($row = mysqli_fetch_assoc($result)) {
+  
+
+  echo "<div class='well'>";
+  echo "<h2>Customer Number: <small>" . $row['Customer_ID'] . "</small></h2>";
+  echo "<h2>First Name: <small>" . $row['First_Name'] . "</small></h2>";
+  echo "<h2>Last Name: <small>" . $row['Last_Name'] . "</small></h2>";
+  echo "<h2>Address: <small>" . $row['Address'] . "</small></h2>";
+  echo "<h2>City: <small>" . $row['City'] . "</small></h2>";
+  echo "<h2>State: <small>" . $row['State'] . "</small></h2>";
+  echo "<h2>Postcode: <small>" . $row['Postcode'] . "</small></h2>";
+  echo "<h2>Email_Address: <small>" . $row['Email_Address'] . "</small></h2>";
+  echo "<h2>Phone_Number: <small>" . $row['Phone_Number'] . "</small></h2>";
+  echo "</div>";
+
+}
+
+}
+
+
+
+?>          
+
+
         </div>
+
       </div>
 
     </article>
@@ -143,10 +174,10 @@
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-2.2.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>

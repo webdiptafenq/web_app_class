@@ -1,0 +1,67 @@
+<?php
+
+
+  
+
+include('connect.php');
+
+$query = "SELECT * FROM `vehicles` ORDER BY `Stock_No` ASC";
+
+$result = mysqli_query($con, $query);
+
+
+
+
+
+
+
+
+while ($row = mysqli_fetch_assoc($result)) {
+  
+    $query2 = "SELECT * FROM `manufacturer` WHERE `Manufacturer_ID` = " . $row['Manufacturer_ID'];
+
+    $result2 = mysqli_query($con, $query2);
+
+    while ($row2 = mysqli_fetch_assoc($result2)){
+
+        $query3 = "SELECT * FROM `category` WHERE `Category_ID` = " . $row['Category_ID'];
+
+        $result3 = mysqli_query($con, $query3);
+
+            while ($row3 = mysqli_fetch_assoc($result3)){
+              
+
+
+                echo "<div class='well'>";
+                  echo "<div class='row'>";
+                    echo "<div class='col-md-8'>";
+                      echo "<h2>VIN: <small>" . $row['VIN'] . "</small></h2>";
+                      echo "<h2>Stock No: <small>" . $row['Stock_No'] . "</small></h2>";
+                      echo "<h2>Manufacturer: <small>" .$row2['Name'] . "</small></h2>";
+                      echo "<h2>Model: <small>" . $row['Model'] . "</small></h2>";
+                      echo "<h2>Category: <small>" . $row3['Description'] . "</small></h2>";
+                      echo "<h2>Year: <small>" . $row['Year'] . "</small></h2>";
+                      echo "<h2>Price: <small>" . $row['Price'] . "</small></h2>";
+                      echo "<h2>Kilometers: <small>" . $row['Kilometers'] . "</small></h2>";
+                      echo "<h2>Color: <small>" . $row['Colour'] . "</small></h2>";
+                      echo "<h2>Registration: <small>" . $row['Registration'] . "</small></h2>";
+                      echo "<h2>Cylinders: <small>" . $row['Cylinders'] . "</small></h2>";
+                      echo "<h2>Fuel: <small>" . $row['Fuel'] . "</small></h2>";
+                      echo "<h2>Transmission: <small>" . $row['Transmission'] . "</small></h2>";
+                    echo "</div>";
+                    
+
+                    echo "<div class='col-md-4'>";
+                     echo "<img class='vehicle-img img-responsive' src='../images/car_" . $row['Stock_No'] . ".jpg'>";
+                    echo "</div>";
+
+                  echo "</div>";
+                echo "</div>";
+            }
+    }
+}
+
+
+
+
+?> 

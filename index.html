@@ -9,10 +9,10 @@
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" >
 
     <link rel="stylesheet" type="text/css" href="css/custom.css">
 
@@ -24,7 +24,7 @@
     <![endif]-->
   </head>
   <body>
-    <a href="pages/employee_login.html" class="btn btn-default login-btn hidden-xs">Employee Login</a>
+    <a href="php/employee_login.php" class="btn btn-default login-btn hidden-xs">Employee Login</a>
     <header>
       <div class="row">
         <div class="col-md-4">
@@ -36,7 +36,7 @@
           <div class="contact-info">
             <p><span class="glyphicon glyphicon-earphone"></span>   Telephone: XX-XXXX-XXXX</p>
             <p><span class="glyphicon glyphicon-envelope"></span>   Email: contactus@westcoastauto.com</p>
-            <p><span class="glyphicon glyphicon-map-marker"></span>  Address: XXX Something St,<br>Somewhere WA</p>
+            <p><span class="glyphicon glyphicon-map-marker"></span>  Address: XXX Something St,</p> <p style="padding-left: 17px;">Somewhere WA</p>
           </div>
         </div>
 
@@ -60,27 +60,31 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
         <li><a href="pages/about.html">About</a></li>
-        <li><a href="pages/used_vehicles.html">Used Vehicles</a></li>
+        <li><a href="php/used_vehicles.php">Used Vehicles</a></li>
         <li><a href="pages/finance.html">Finance</a></li>
         <li><a href="pages/testimonials.html">Testimonials</a></li>
         <li><a href="pages/contact.html">Contact</a></li>
-        <li><a href="php/login.php" class="hidden-sm hidden-md hidden-lg">Employee Login</a></li>
+        <li><a href="php/employee_login.php" class="hidden-sm hidden-md hidden-lg">Employee Login</a></li>
       </ul>
  
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-<div class="jumbotron">
-  <h1>Cheapest Cars in Perth!</h1>
-  <p>We offer 100% finance</p>
-  <p><a class="btn btn-primary btn-lg" href="pages/used_vehicles.html" role="button">See for yourself!</a></p>
+<div class="bg">
+  <div class="jumbotron">
+    <h1>Cheapest Cars in Perth!</h1>
+    <p>We offer 100% finance</p>
+    <p><a class="btn btn-primary btn-lg" href="pages/used_vehicles.html" role="button">See for yourself!</a></p>
+  </div>
 </div>
-
 <div class="row">
   <div class="col-xs-12">
     <article class="inner-main-content">
-      <h1>Main Content Area</h1>
+      <h1>Come and visit us</h1>
+
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis egestas cursus augue, vel consequat mauris tincidunt convallis. Morbi pharetra augue eros, vitae tincidunt velit fringilla nec. Curabitur viverra, ligula sit amet gravida interdum, nibh lectus fringilla mauris, at faucibus felis nisi ut nibh. Cras consectetur pharetra felis. Vestibulum congue mollis erat. Praesent consectetur vitae sapien quis feugiat. Donec gravida metus pretium mattis ultrices. Vestibulum auctor euismod turpis, vel sodales magna vestibulum ut. Vivamus rhoncus, ligula non euismod cursus, enim risus feugiat nisi, sit amet vehicula diam libero quis elit. Fusce ullamcorper diam et ex luctus fringilla. Pellentesque feugiat sapien justo, eu euismod erat maximus vel.</p>
+
+      <p>Praesent vitae ipsum turpis. Maecenas consequat erat urna, et dictum diam fermentum eget. Nam consequat, sem vel ultricies tincidunt, sapien sem faucibus tellus, vel congue sapien nisl et odio. Aenean facilisis at neque eget varius. Etiam lacus ipsum, viverra non fermentum vel, eleifend nec sem. Aenean non cursus metus.</p>
     </article>
   </div>
 </div>
@@ -103,9 +107,9 @@
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/jquery-2.2.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

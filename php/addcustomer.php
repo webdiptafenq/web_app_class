@@ -1,3 +1,36 @@
+<?php
+
+session_start();
+$success = "";
+if ($_POST) {
+  include('connect.php');
+  $firstname = $lastname = $address = $city = $state = $postcode = $email = $phonenumber = "";
+  $firstname = $_POST['firstname'];
+  $lastname = $_POST['lastname'];
+  $address = $_POST['address'];
+  $city = $_POST['city'];
+  $state = $_POST['state'];
+  $postcode = $_POST['postcode'];
+  $email = $_POST['email'];
+  $phonenumber = $_POST['phonenumber'];
+
+
+
+$query = "INSERT INTO `customers` (`Customer_ID`, `First_Name`, `Last_Name`, `Address`, `City`, `State`, `Postcode`, `Email_Address`, `Phone_Number`) 
+VALUES (NULL, '$firstname', '$lastname', '$address', '$city', '$state', '$postcode', '$email', '$phonenumber');";
+
+$result = mysqli_query($con, $query);
+
+if ($result) {
+  $success = "you have added " . $firstname . " " . $lastname . " to the database!";
+}
+
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,13 +42,12 @@
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" >
 
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -24,7 +56,7 @@
     <![endif]-->
   </head>
   <body>
-    <a href="..php/logout.php" class="btn btn-default login-btn hidden-xs">Logout</a>
+    <a href="../php/logout.php" class="btn btn-default login-btn hidden-xs">Logout</a>
     <header>
       <div class="row">
         <div class="col-md-4">
@@ -59,7 +91,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="../index.html">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="../pages/about.html">About</a></li>
         <li><a href="used_vehicles.html">Used Vehicles</a></li>
         <li><a href="finance.html">Finance</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
@@ -74,41 +106,56 @@
 <div class="row">
   <div class="col-xs-12">
     <article class="inner-main-content">
-      <h1>Employee Dashboard</h1>
-      <div class="row">
-        <div class="col-xs-12">
-          <form role="form">
-            <div class="form-group">
-              <label for="username">Username:</label>
-              <input type="text" class="form-control" id="username">
-            </div>
-            <div class="form-group">
-              <label for="pwd">Password:</label>
-              <input type="password" class="form-control" id="pwd">
-            </div>
-            <div class="form-group">
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-        </div>
-      </div>
+      <h1>Add Customer</h1>
+      <h2><?php echo $success; ?></h2>
       <div class="row employee-login">
         <div class="col-xs-4">
-          <a href="viewcustomer.html" class="btn btn-success">View Customer</a>
+          <a href="viewcustomer.php" class="btn btn-success">View Customer</a>
         </div>
         <div class="col-xs-4">
-          <a href="addcustomer.html" class="btn btn-success">Add Customer</a>
+          <a href="addcustomer.php" class="btn btn-success">Add Customer</a>
         </div>
         <div class="col-xs-4">
-          <a href="addsale.html" class="btn btn-success">Make Sale</a>
+          <a href="addsale.php" class="btn btn-success">Make Sale</a>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-8">
-        
-        </div>
-        <div class="col-md-4">
-          <!--img of vegicle goes here-->
-
+        <div class="col-xs-12">
+          <form role="form" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <div class="form-group">
+              <label for="firstname">First Name:</label>
+              <input type="text" class="form-control" id="firstname" name="firstname">
+            </div>
+            <div class="form-group">
+              <label for="lastname">Last Name:</label>
+              <input type="text" class="form-control" id="lastname" name="lastname">
+            </div>
+              <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address" name="address">
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" class="form-control" id="city" name="city">
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input type="text" class="form-control" id="state" name="state">
+            </div>
+             <div class="form-group">
+              <label for="postcode">Postcode:</label>
+              <input type="text" class="form-control" id="postcode" name="postcode">
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" name="email">
+            </div>
+             <div class="form-group">
+              <label for="phonenumber">Phonenumber:</label>
+              <input type="text" class="form-control" id="phonenumber" name="phonenumber">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
         </div>
       </div>
 
@@ -133,10 +180,10 @@
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-2.2.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>

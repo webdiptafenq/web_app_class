@@ -1,3 +1,45 @@
+<?php
+ session_start();
+$message = "<p></p>";
+$username = $password = "";
+
+if ($_POST) {
+  
+$username = test_input($_POST['username']);
+$password = md5($_POST['pwd']);
+
+
+
+include('connect.php');
+
+$query = "SELECT * FROM `users` WHERE `username` = '$username' AND `password` = '$password'";
+
+$result = mysqli_query($con, $query);
+
+if ($result) {
+ 
+  $_SESSION['loggedin']='true';
+  
+} else {
+$message = "<p> Wrong username or password</p>";
+  
+}
+
+}
+
+function test_input($data) {
+$data = trim($data);
+$data = stripslashes($data);
+$data = htmlspecialchars($data);
+return $data;
+
+
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,12 +49,12 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>West Coast Auto</title>
 
-    <!-- Bootstrap -->
+        <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" >
 
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 
@@ -24,7 +66,7 @@
     <![endif]-->
   </head>
   <body>
-    <a href="employee_login.html" class="btn btn-default login-btn hidden-xs">Employee Login</a>
+    <a href="logout.php" class="btn btn-default login-btn hidden-xs">Logout</a>
     <header>
       <div class="row">
         <div class="col-md-4">
@@ -59,12 +101,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="../index.html">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="about.html">About</a></li>
-        <li class="active"><a href="used_vehicles.html">Used Vehicles</a></li>
+        <li><a href="../pages/about.html">About</a></li>
+        <li><a href="used_vehicles.php">Used Vehicles</a></li>
         <li><a href="finance.html">Finance</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
         <li><a href="contact.html">Contact</a></li>
-         <li><a href="../php/login.php" class="hidden-sm hidden-md hidden-lg">Employee Login</a></li>
+         <li><a href="logout.php" class="hidden-sm hidden-md hidden-lg">Logout</a></li>
       </ul>
  
     </div><!-- /.navbar-collapse -->
@@ -74,22 +116,59 @@
 <div class="row">
   <div class="col-xs-12">
     <article class="inner-main-content">
-      <h1>Main Content Area - Used Vehicles</h1>
+      <h1>Employee Dashboard</h1>
+      <?php echo $message; ?>
+      <div class="row">
+        <div class="col-xs-12">
+<?php
+
+if (!isset($_SESSION['loggedin'])) {
+
+          echo "<form role='form' ' method='POST'>
+            <div class='form-group'>
+              <label for='username'>Username:</label>
+              <input type='text' class='form-control' id='username' name='username'>
+            </div>
+            <div class='form-group'>
+              <label for='pwd'>Password:</label>
+              <input type='password' class='form-control' id='pwd' name='pwd'>
+            </div>
+            <div class='form-group'>
+            <button type='submit' class='btn btn-default'>Submit</button>
+        </form>";
+
+      }
+
+      ?>
+        </div>
+      </div>
+
+<?php
+
+if (isset($_SESSION['loggedin'])) {
+  echo "<div class='row employee-login'>
+        <div class='col-xs-4'>
+          <a href='viewcustomer.php' class='btn btn-success'>View Customer</a>
+        </div>
+        <div class='col-xs-4'>
+          <a href='addcustomer.php' class='btn btn-success'>Add Customer</a>
+        </div>
+        <div class='col-xs-4'>
+          <a href='addsale.php' class='btn btn-success'>Make Sale</a>
+        </div>
+      </div>";
+}
+
+?>
+
+      
       <div class="row">
         <div class="col-md-8">
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
-            <h2>Make: <small>Toyota</small></h2>
+        
         </div>
         <div class="col-md-4">
           <!--img of vegicle goes here-->
-          <img class="vehicle-img img-responsive" src="../images/toyota.jpg">
+
         </div>
       </div>
 
@@ -114,10 +193,10 @@
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-2.2.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>

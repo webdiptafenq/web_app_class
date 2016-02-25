@@ -9,10 +9,10 @@
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" >
 
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 
@@ -24,7 +24,7 @@
     <![endif]-->
   </head>
   <body>
-    <a href="../php/logout.php" class="btn btn-default login-btn hidden-xs">Logout</a>
+    <a href="employee_login.php" class="btn btn-default login-btn hidden-xs">Employee Login</a>
     <header>
       <div class="row">
         <div class="col-md-4">
@@ -59,12 +59,12 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="../index.html">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="used_vehicles.html">Used Vehicles</a></li>
+        <li><a href="../pages/about.html">About</a></li>
+        <li class="active"><a href="used_vehicles.html">Used Vehicles</a></li>
         <li><a href="finance.html">Finance</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
         <li><a href="contact.html">Contact</a></li>
-         <li><a href="../php/logout.php" class="hidden-sm hidden-md hidden-lg">Logout</a></li>
+         <li><a href="../php/login.php" class="hidden-sm hidden-md hidden-lg">Employee Login</a></li>
       </ul>
  
     </div><!-- /.navbar-collapse -->
@@ -74,46 +74,67 @@
 <div class="row">
   <div class="col-xs-12">
     <article class="inner-main-content">
-      <h1>Add Sale</h1>
-      <div class="row employee-login">
-        <div class="col-xs-4">
-          <a href="viewcustomer.html" class="btn btn-success">View Customer</a>
-        </div>
-        <div class="col-xs-4">
-          <a href="addcustomer.html" class="btn btn-success">Add Customer</a>
-        </div>
-        <div class="col-xs-4">
-          <a href="addsale.html" class="btn btn-success">Make Sale</a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <form role="form">
-            <div class="form-group">
-              <label for="email">Customer ID:</label>
-              <input type="text" class="form-control" id="custid">
-            </div>
-            <div class="form-group">
-              <label for="pwd">Vehicle Stock Number:</label>
-              <input type="text" class="form-control" id="stockid">
-            </div>
-            <div class="form-group">
-              <label for="pwd">Sales Person:</label>
-              <input type="text" class="form-control" id="salespersonid">
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8">
-        
-        </div>
-        <div class="col-md-4">
-          <!--img of vegicle goes here-->
+      <h1>Used Vehicles</h1>
+<?php
 
-        </div>
-      </div>
+session_start();
+  
+
+include('connect.php');
+
+$query = "SELECT * FROM `vehicles` ORDER BY `Stock_No` ASC";
+
+$result = mysqli_query($con, $query);
+
+while ($row = mysqli_fetch_assoc($result)) {
+  
+    $query2 = "SELECT * FROM `manufacturer` WHERE `Manufacturer_ID` = " . $row['Manufacturer_ID'];
+
+    $result2 = mysqli_query($con, $query2);
+
+    while ($row2 = mysqli_fetch_assoc($result2)) {
+
+            $query3 = "SELECT * FROM `category` WHERE `Category_ID` = " . $row['Category_ID'];
+
+           $result3 = mysqli_query($con, $query3);
+
+           while ($row3 = mysqli_fetch_assoc($result3)) {
+
+                echo "<div class='well'>";
+                  echo "<div class='row'>";
+                    echo "<div class='col-md-8'>";
+                      echo "<h2>VIN: <small>" . $row['VIN'] . "</small></h2>";
+                      echo "<h2>Stock No: <small>" . $row['Stock_No'] . "</small></h2>";
+                      echo "<h2>Manufacturer: <small>" .$row2['Name'] . "</small></h2>";
+                      echo "<h2>Model: <small>" . $row['Model'] . "</small></h2>";
+                      echo "<h2>Category: <small>" . $row3['Description'] . "</small></h2>";
+                      echo "<h2>Year: <small>" . $row['Year'] . "</small></h2>";
+                      echo "<h2>Price: <small>" . $row['Price'] . "</small></h2>";
+                      echo "<h2>Kilometers: <small>" . $row['Kilometers'] . "</small></h2>";
+                      echo "<h2>Color: <small>" . $row['Colour'] . "</small></h2>";
+                      echo "<h2>Registration: <small>" . $row['Registration'] . "</small></h2>";
+                      echo "<h2>Cylinders: <small>" . $row['Cylinders'] . "</small></h2>";
+                      echo "<h2>Fuel: <small>" . $row['Fuel'] . "</small></h2>";
+                      echo "<h2>Transmission: <small>" . $row['Transmission'] . "</small></h2>";
+                    echo "</div>";
+                    
+
+                    echo "<div class='col-md-4'>";
+                     echo "<img class='vehicle-img img-responsive' src='../images/car_" . $row['Stock_No'] . ".jpg'>";
+                    echo "</div>";
+
+                  echo "</div>";
+                echo "</div>";
+          }
+    }
+}
+
+
+
+
+?>     
+
+    
 
     </article>
   </div>
@@ -136,10 +157,10 @@
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-2.2.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>

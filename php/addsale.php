@@ -1,3 +1,35 @@
+<?php
+
+session_start();
+$success = $error = "";
+if ($_POST) {
+  
+  $staffid = $customerid = $stocknumber = "";
+
+  $staffid = $_POST['salespersonid'];
+  $customerid = $_POST['custid'];
+  $stocknumber = $_POST['stockid'];
+  
+
+include('connect.php');
+
+$query = "INSERT INTO `sale` (`Recipt_No`, `Staff_ID`, `Customer_ID`, `Date`, `Stock_No`) VALUES (NULL, '$staffid', '$customerid', NULL, '$stocknumber');";
+
+$result = mysqli_query($con, $query);
+
+if ($result) {
+  $success = "you have created a sale";
+} else {
+
+  $error = "could not create sale, check that Customer ID, Salesperson ID and Stock Number are correct.";
+}
+
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,10 +41,10 @@
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link  href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="../css/bootstrap-theme.min.css" rel="stylesheet" >
 
     <link rel="stylesheet" type="text/css" href="../css/custom.css">
 
@@ -59,8 +91,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="../index.html">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="used_vehicles.html">Used Vehicles</a></li>
+        <li><a href="../pages/about.html">About</a></li>
+        <li><a href="used_vehicles.php">Used Vehicles</a></li>
         <li><a href="finance.html">Finance</a></li>
         <li><a href="testimonials.html">Testimonials</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -74,42 +106,46 @@
 <div class="row">
   <div class="col-xs-12">
     <article class="inner-main-content">
-      <h1>View Customer</h1>
+      <h1>Add Sale</h1>
+      <?php echo $success . $error ?>
       <div class="row employee-login">
         <div class="col-xs-4">
-          <a href="viewcustomer.html" class="btn btn-success">View Customer</a>
+          <a href="viewcustomer.php" class="btn btn-success">View Customer</a>
         </div>
         <div class="col-xs-4">
-          <a href="addcustomer.html" class="btn btn-success">Add Customer</a>
+          <a href="addcustomer.php" class="btn btn-success">Add Customer</a>
         </div>
         <div class="col-xs-4">
-          <a href="addsale.html" class="btn btn-success">Make Sale</a>
+          <a href="addsale.php" class="btn btn-success">Make Sale</a>
         </div>
       </div>
-            <div class="row">
-        <div class="col-md-12">
-            <form role="form">
-            <div class="form-group">
-              <label for="username">Last Name:</label>
-              <input type="text" class="form-control" id="username">
-            </div>
-            
-            <div class="form-group">
-            <button type="submit" class="btn btn-default">Submit</button>
-          </div>
-         </form>
-      </div>
-    </div>
       <div class="row">
-        <div class="col-md-12">
-            <h2>Customer Number: <small>1234</small></h2>
-            <h2>First Name: <small>Bob</small></h2>
-            <h2>Last Name: <small>Smith</small></h2>
-            <h2>Address: <small>142 tytgy uy oiuyuoyoy QHJ</small></h2>
-            <h2>Email: <small>arty@tyui.com</small></h2>
-            <h2>Phone: <small>12345678</small></h2>
+        <div class="col-xs-12">
+          <form role="form" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <div class="form-group">
+              <label for="email">Customer ID:</label>
+              <input type="text" class="form-control" id="custid" name="custid">
+            </div>
+            <div class="form-group">
+              <label for="pwd">Vehicle Stock Number:</label>
+              <input type="text" class="form-control" id="stockid" name="stockid">
+            </div>
+            <div class="form-group">
+              <label for="salespersonid">Sales Person:</label>
+              <input type="text" class="form-control" id="salespersonid" name="salespersonid">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+        
+        </div>
+        <div class="col-md-4">
+          <!--img of vegicle goes here-->
 
+        </div>
       </div>
 
     </article>
@@ -133,10 +169,10 @@
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../js/jquery-2.2.1.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
   </body>
 </html>
